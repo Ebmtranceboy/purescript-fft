@@ -3,13 +3,13 @@ module Data.Complex.FFT where
 import Prelude
 
 import Control.Monad.ST (ST, run, for)
-import Data.Array (reverse, mapWithIndex, length, sortBy, (..), replicate)
+import Data.Array (reverse, mapWithIndex, length, sortBy, (..), replicate, zipWith)
 import Data.Array.ST (STArray, peek, poke, withArray)
 import Data.Complex (Cartesian(..), conjugate)
 import Data.Foldable (foldr)
+import Data.Traversable (sequence)
 import Data.Int (toStringAs, binary, fromStringAs, toNumber, round)
 import Data.Int.Bits (shl)
-import Data.List (fromFoldable, toUnfoldable, transpose) as Array
 import Data.Maybe (fromJust)
 import Data.String (length) as String
 import Data.String (toCodePointArray, singleton)
@@ -83,10 +83,20 @@ fft dir zs =
       complexp = run (withArray (trigTable n2) (replicate n2 one))
    in (\z -> (_ / sqrt n) <$> z) <$> run (withArray (process dir b fs complexp) fs)
 
+newtype ZipList a = ZipList (Array a)
+
+derive newtype instance functorZipList :: Functor ZipList
+
+instance applyZipList :: Apply ZipList where
+  apply (ZipList fs) (ZipList xs) = ZipList (zipWith ($) fs xs)
+
+instance applicativeZipList :: Applicative ZipList where
+   pure = ZipList <<<  const []
+
 transpose :: forall a. Array (Array a) -> Array (Array a)
-transpose arr = Array.toUnfoldable $
-  Array.toUnfoldable <$> (Array.transpose $
-    Array.fromFoldable $ Array.fromFoldable <$> arr)
+transpose xs =
+  let ZipList ys = sequence $ ZipList <$> xs
+  in ys
 
 fft2 :: Direction -> Array (Array Complex) -> Array (Array Complex)
 fft2 dir zss = transpose $ fft dir <$> (transpose $ fft dir <$> zss)
