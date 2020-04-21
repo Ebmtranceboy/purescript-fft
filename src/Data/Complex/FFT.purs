@@ -46,9 +46,9 @@ unsafePeek idx arr = do
   mz <- peek idx arr
   pure $ unsafePartial $ fromJust mz
 
-process :: forall h. Direction -> ExponentOfTwo -> Array Complex
+process :: forall h. Direction -> ExponentOfTwo
                      -> Array Complex -> STArray h Complex -> ST h Unit
-process dir b fs complexp a =
+process dir b complexp a =
   for 0 b \ i -> do
     let count = shl 1 (b-i-1)
         step = shl 1 i
@@ -81,7 +81,7 @@ fft dir zs =
       n2 = (shl 1 b) `div` 2
       fs = (\i -> zs !! initialSort b i) <$> (0 .. (length zs-1))
       complexp = run (withArray (trigTable n2) (replicate n2 one))
-   in (\z -> (_ / sqrt n) <$> z) <$> run (withArray (process dir b fs complexp) fs)
+   in (\z -> (_ / sqrt n) <$> z) <$> run (withArray (process dir b complexp) fs)
 
 newtype ZipList a = ZipList (Array a)
 
