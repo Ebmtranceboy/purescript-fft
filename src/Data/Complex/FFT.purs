@@ -41,7 +41,7 @@ trigTable n a =
         poke i (Cartesian (x * csn - y * sn)
                           (y * csn + x * sn)) a
 
-unsafePeek :: forall a. Int -> STArray a Complex -> ST a Complex
+unsafePeek :: forall a ty. Int -> STArray a ty -> ST a ty
 unsafePeek idx arr = do
   mz <- peek idx arr
   pure $ unsafePartial $ fromJust mz
