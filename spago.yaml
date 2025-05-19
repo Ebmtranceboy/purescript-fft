@@ -1,5 +1,13 @@
 package:
   dependencies:
+    - arrays
+    - foldable-traversable
+    - integers
+    - maybe
+    - numbers
+    - partial
+    - prelude
+    - st
     - cartesian: ">=1.0.6 <2.0.0"
     - console: ">=6.1.0 <7.0.0"
     - effect: ">=4.0.0 <5.0.0"

@@ -5,10 +5,20 @@
         "path": "./",
         "core": {
           "dependencies": [
-            "cartesian",
-            "console",
-            "effect",
-            "strings"
+            "arrays",
+            {
+              "cartesian": ">=1.0.6 <2.0.0"
+            },
+            "foldable-traversable",
+            "integers",
+            "maybe",
+            "numbers",
+            "partial",
+            "prelude",
+            "st",
+            {
+              "strings": ">=6.0.1 <7.0.0"
+            }
           ],
           "build_plan": [
             "arrays",
