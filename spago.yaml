@@ -2,8 +2,6 @@ package:
   dependencies:
     - arrays: ">=7.3.0 <8.0.0"
     - cartesian: ">=1.0.6 <2.0.0"
-    - console: ">=6.1.0 <7.0.0"
-    - effect: ">=4.0.0 <5.0.0"
     - foldable-traversable: ">=6.0.0 <7.0.0"
     - integers: ">=6.0.0 <7.0.0"
     - maybe: ">=6.0.0 <7.0.0"
@@ -14,7 +12,9 @@ package:
     - strings: ">=6.0.1 <7.0.0"
   name: fft
   test:
-    dependencies: []
+    dependencies: 
+      - console: ">=6.1.0 <7.0.0"
+      - effect: ">=4.0.0 <5.0.0"
     main: Test.Main
   publish:
     version: 0.3.0
