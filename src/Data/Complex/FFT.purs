@@ -4,6 +4,7 @@ import Prelude
 
 import Control.Monad.ST (ST, run, for)
 import Data.Array (reverse, mapWithIndex, length, sortBy, (..), replicate, zipWith)
+import Data.Array ((!!)) as Array
 import Data.Array.ST (STArray, peek, poke, withArray)
 import Data.Complex (Cartesian(..), conjugate)
 import Data.Foldable (foldr)
@@ -13,9 +14,13 @@ import Data.Int.Bits (shl)
 import Data.Maybe (fromJust)
 import Data.String (length) as String
 import Data.String (toCodePointArray, singleton)
-import Math (sqrt, cos, atan2, pi, log)
-import PRNG ((!!))
+import Data.Number (sqrt, cos, atan2, pi, log)
 import Partial.Unsafe (unsafePartial)
+
+nth :: forall a. Array a -> Int -> a
+nth xs i =  unsafePartial fromJust $ xs Array.!! i
+
+infixl 6 nth as !!
 
 type Complex = Cartesian Number
 

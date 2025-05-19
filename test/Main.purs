@@ -5,7 +5,7 @@ import Data.Complex.FFT (Direction(..), fft)
 import Data.Complex (Cartesian(..), magnitudeSquared)
 import Data.Foldable (sum)
 import Data.Int (toNumber)
-import Math (sin, pi)
+import Data.Number (sin, pi)
 import Data.Array ((..))
 
 import Effect (Effect)
